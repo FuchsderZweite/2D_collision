@@ -21,7 +21,7 @@ class Circle():
         if self.v[0] == 0 or self.v[1] == 0:
             self.v = pygame.math.Vector2(randint(-self.VELOCITY_MAX, self.VELOCITY_MAX), randint(-self.VELOCITY_MAX, self.VELOCITY_MAX))
         self.a = np.array((1,1))
-        self.color = (randint(0, 255), randint(0, 255), randint(0, 255))
+        self.color = (randint(10, 255), randint(10, 255), randint(10, 255))
 
     def draw(self, screen):
         self.screen = screen
@@ -30,6 +30,9 @@ class Circle():
     def movement(self, dt):
         self.r[0] += self.v[0] * dt
         self.r[1] += self.v[1] * dt
+
+    def update(self, dt):
+        self.movement(dt)
 
 
 

@@ -12,12 +12,15 @@ BLACK = (0, 0, 0)
 NUMBER_OF_OBJECTS = 5
 circles = [obj.Circle() for i in range(NUMBER_OF_OBJECTS)]
 
-def redraw_window(screen, right_screen, dt):
+def redraw_window(dt, *screens):
+    screen, right_screen = screens
+
     screen.fill(WHITE)
     screen.fill((193, 193, 193), right_screen)
     for i in circles:
-        #i.update(dt)
+        i.update(dt)
         i.draw(screen)
+        i.draw(right_screen)
 
 
 def main():
@@ -39,6 +42,7 @@ def main():
     clock = pygame.time.Clock()
     screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
     right_screen = pygame.Rect(600, 0, 400, 900)
+    screens = [screen, right_screen]
     scaling = 0.00001
     dt = clock.tick(60) * scaling * FPS
 
@@ -50,17 +54,16 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
 
-            redraw_window(screen, right_screen, dt)
-            for i in circles:
-                obj.Simulation.wall_collision(i)
+        redraw_window(dt, *screens)
+        for i in circles:
+            obj.Simulation.wall_collision(i)
 
-
-
-
-
-            pygame.display.flip()
-            clock.tick(FPS)
+            #redraw_window(screen, right_screen, dt)
+        pygame.display.flip()
+        clock.tick(FPS)
     pygame.quit()
+    quit()
+
 
 if __name__ == '__main__':
     main()
