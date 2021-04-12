@@ -8,7 +8,7 @@ from itertools import combinations
 class Circle():
     FIELD_WIDTH = 600
     FIELD_HEIGHT = 600
-    VELOCITY_MAX = 1
+    VELOCITY_MAX = 3
     id_list = []
     def __init__(self):
         self.id = len(self.id_list) + 1
@@ -33,8 +33,11 @@ class Circle():
 
 
 
-class Simulation():
-    def wall_collision(self, particle):
+class Simulation(Circle):
+    #def __init__(self):
+     #   self.id_list = Circle.id_list
+
+    def wall_collision(particle):
         if particle.r[0] - particle.radius < 0:
             particle.r[0] = particle.radius
             particle.v[0] = -particle.v[0]
@@ -49,7 +52,7 @@ class Simulation():
             particle.v[1] = -particle.v[1]
 
 
-    def change_velocity(self, p1, p2):
+    def change_velocity(p1, p2):
         r1 = p1.r
         r2 = p2.r
         v1 = p1.v
@@ -65,13 +68,13 @@ class Simulation():
         return p1.v, p2.v
 
 
-    def circle_collision(self, p1, p2, dt):
-        pairs = combinations(range(len(self.id_list)), 2)
+    def circle_collision(p1, p2):
+        pairs = combinations(range(len(Circle.id_list)), 2)
         for i, j in pairs:
             if p1.overlaps(p2):
-                self.change_velocity(p1, p2)
+                p1.change_velocity(p1, p2)
 
-    def overlap(self, p2):
+    def overlaps(self, p2):
         return np.hypot(*(self.r - p2.r)) < self.radius + p2.radius
 
     def is_clicked(self):
