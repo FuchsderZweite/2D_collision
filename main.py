@@ -10,17 +10,17 @@ VIOLET = (95, 75, 182)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 NUMBER_OF_OBJECTS = 5
-circles = [obj.Circle() for i in range(NUMBER_OF_OBJECTS)]
+circles = [obj.Circle(i) for i in range(NUMBER_OF_OBJECTS)]
 
 def redraw_window(dt, *screens):
     screen, right_screen = screens
 
     screen.fill(WHITE)
     screen.fill((193, 193, 193), right_screen)
-    for i in circles:
-        i.update(dt)
-        i.draw(screen)
-        i.draw(right_screen)
+    for circle in circles:
+        circle.update(dt)
+        circle.draw(screen)
+        circle.draw(right_screen)
 
 
 def main():
